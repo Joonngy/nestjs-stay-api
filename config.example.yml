@@ -17,7 +17,7 @@ x-roPgConfig: &roPgConfig
 
 x-mongoConfig: &mongoConfig
   uri: 'mongodb://localhost:27017'
-  database: 'stay_logs'
+  database: 'db_name'
   options:
     maxPoolSize: 10
     minPoolSize: 2
@@ -27,10 +27,16 @@ x-mongoConfig: &mongoConfig
       w: 1
       j: false
 
+x-commonRedisConfig: &commonRedisConfig
+  host: 'localhost'
+  port: 6379
+  retry_timeout: 100
+
 stayConfig: 
   rwPgConfig: *rwPgConfig
   roPgConfig: *roPgConfig
   mongoConfig: *mongoConfig
+  commonRedisConfig: *commonRedisConfig
   port:
     api: 32098
     websocket: 32099
