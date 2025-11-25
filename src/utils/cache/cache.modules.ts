@@ -1,7 +1,7 @@
 import {Module} from '@nestjs/common';
 
 import {REDIS_SERVICE} from 'src/config/types/constant';
-import {RedisService} from './type/redis.service';
+import {RedisService} from './types/redis.service';
 
 const redisProvider = {
     provide: REDIS_SERVICE,

@@ -29,6 +29,8 @@
         "migrate:redo": "node-pg-migrate redo -m database/psql/migrations"
     },
     "dependencies": {
+        "@aws-sdk/client-s3": "^3.939.0",
+        "@aws-sdk/client-sqs": "^3.939.0",
         "@nestjs/common": "^11.1.8",
         "@nestjs/config": "^4.0.2",
         "@nestjs/core": "^11.1.8",
@@ -36,6 +38,7 @@
         "@nestjs/mongoose": "^11.0.3",
         "@nestjs/platform-express": "^11.1.8",
         "@nestjs/swagger": "^11.2.1",
+        "@nestjs/websockets": "^11.1.9",
         "axios": "^1.13.2",
         "class-transformer": "^0.5.1",
         "class-validator": "^0.14.2",
@@ -46,7 +49,8 @@
         "reflect-metadata": "^0.2.2",
         "rxjs": "^7.8.1",
         "slonik": "^48.4.1",
-        "winston": "^3.18.3"
+        "winston": "^3.18.3",
+        "ws": "^8.18.3"
     },
     "devDependencies": {
         "@nestjs/cli": "^11.0.10",

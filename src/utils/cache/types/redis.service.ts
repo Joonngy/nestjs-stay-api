@@ -3,12 +3,6 @@ import {ConfigService} from '@nestjs/config';
 import {createClient, RedisClientType} from 'redis';
 import {Config} from '../../../config/types';
 
-export type RedisConfig = {
-    host: string;
-    port: number;
-    retryTimeout: number;
-};
-
 @Injectable()
 export class RedisService {
     private commonClient: RedisClientType;

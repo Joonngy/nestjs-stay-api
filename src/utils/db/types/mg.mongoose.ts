@@ -1,20 +1,6 @@
-import { OnModuleDestroy, OnModuleInit } from '@nestjs/common';
+import {OnModuleDestroy, OnModuleInit} from '@nestjs/common';
 import mongoose, {Connection, Model, Schema} from 'mongoose';
-
-export type MongoConfig = {
-    uri: string;
-    database: string;
-    options: {
-        maxPoolSize: number;
-        minPoolSize: number;
-        serverSelectionTimeoutMS: number;
-        socketTimeoutMS: number;
-        writeConcern: {
-            w: number;
-            j: boolean;
-        };
-    };
-};
+import {MongoConfig} from 'src/config/types';
 
 export class MongoUtil implements OnModuleInit, OnModuleDestroy {
     private mongoConfig: MongoConfig;
@@ -55,7 +41,7 @@ export class MongoUtil implements OnModuleInit, OnModuleDestroy {
         if (this.connection.models[name]) {
             return this.connection.models[name] as Model<T>;
         }
-        
+
         return this.connection.model(name, schema) as unknown as Model<T>;
     }
 

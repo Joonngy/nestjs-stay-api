@@ -1,34 +1,13 @@
 import {createPool, sql, type DatabasePool, createTypeParserPreset, type Interceptor, ClientConfigurationInput} from 'slonik';
 import {PoolConfig} from 'pg';
 import {PgConnectMode, READ_WRITE} from 'src/config/types/constant';
+import {Logger} from '@nestjs/common';
+import {PgConfig} from 'src/config/types';
 
 const DEFAULT_TIMEOUT = 5000;
 
 const pgUtilPool: {[key: string]: PgSlonik} = {};
 class QueryTimeoutError extends Error {}
-
-export type PgConfigBase = {
-    host?: string;
-    port?: number;
-    user?: string;
-    password?: string;
-    database?: string;
-    ssl?:
-        | boolean
-        | {
-              rejectUnauthorized?: boolean;
-              ca?: string;
-              cert?: string;
-              key?: string;
-          };
-};
-
-export type PgConfig = PgConfigBase & {
-    connectionTimeoutMillis?: number;
-    idleTimeoutMillis?: number;
-    max?: number;
-    searchPath?: string;
-};
 
 export type DbConfig = {
     connectionString: string;
@@ -42,6 +21,7 @@ export type DbConfig = {
 };
 
 export class PgSlonik {
+    private readonly logger = new Logger(PgSlonik.name);
     private mode: PgConnectMode;
     private pgConfig: PoolConfig;
     private dbConfig: DbConfig;
@@ -96,7 +76,7 @@ export class PgSlonik {
             };
             this.slonikPool = await createPool(cfg.connectionString, opts);
         } catch (error) {
-            console.error('Failed to connect to PostgreSQL', error);
+            this.logger.error('Failed to connect to PostgreSQL', error);
             throw error;
         }
     }
