@@ -9,7 +9,7 @@ const configuration = (): Config => {
 
     if (program.args.length !== 1) {
         console.log('Usage: node index.js --config <config.yml> <mode>')
-        console.log('mode: stay-server')
+        console.log('mode: stay-server-api')
         process.exit(1)
     }
 

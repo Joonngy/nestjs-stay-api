@@ -1,13 +1,5 @@
-import {
-    createPool,
-    sql,
-    type DatabasePool,
-    createTypeParserPreset,
-    type Interceptor,
-    ClientConfigurationInput,
-    DatabaseTransactionConnection,
-} from 'slonik';
-import {Pool, PoolClient, PoolConfig, QueryResult} from 'pg';
+import {createPool, sql, type DatabasePool, createTypeParserPreset, type Interceptor, ClientConfigurationInput} from 'slonik';
+import {PoolConfig} from 'pg';
 import {PgConnectMode, READ_WRITE} from 'src/config/types/constant';
 
 const DEFAULT_TIMEOUT = 5000;

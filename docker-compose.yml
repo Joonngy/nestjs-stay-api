@@ -1,7 +1,7 @@
 version: '3.8'
 services:
-  stay-api-postgres: 
-    image: postgres
+  stay-api-postgres:
+    image: postgis/postgis:16-3.4
     restart: on-failure
     environment:
       POSTGRES_USER: postgres
@@ -18,10 +18,23 @@ services:
       - 6379:6379
     volumes:
       - redis:/data
+  stay-api-mongo:
+    image: mongo:7
+    hostname: mongo-server
+    restart: on-failure
+    environment:
+      MONGO_INITDB_DATABASE: stay_logs
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongodata:/data/db
 volumes:
   redis:
     driver: local
   pgdata:
+    driver: local
+  mongodata:
+    driver: local
 
 
 

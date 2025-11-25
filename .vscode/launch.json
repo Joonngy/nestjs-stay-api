@@ -1,43 +1,24 @@
-// "program": "${workspaceFolder}/01_nest-start/src/main.ts",
-// "outFiles": [
-//     "${workspaceFolder}/**/*.js"
-// ]
-
 {
     "version": "0.2.0",
     "configurations": [
-      {
-        "type": "node",
-        "request": "launch",
-        "name": "03_stay",
-        "nodeVersionHint": 18,
-        "args": [
-          "${workspaceFolder}/03_stay/src/main.ts"
-        ],
-        "runtimeArgs": [
-          "--nolazy",
-          "-r",
-          "ts-node/register",
-          "-r",
-          "tsconfig-paths/register"
-        ],
-        "sourceMaps": true,
-        "cwd": "${workspaceRoot}/03_stay",
-        "console": "integratedTerminal",
-        "protocol": "inspector"
-      },
-      {
-        "name": "Debug Jest Tests",
-        "type": "node",
-        "request": "launch",
-        "runtimeArgs": [
-          "--inspect-brk",
-          "${workspaceRoot}/node_modules/.bin/jest",
-          "--runInBand",
-          "--coverage",
-          "false"
-        ],
-        "console": "integratedTerminal"
-      }
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "stay-server-api",
+            "nodeVersionHint": 22,
+            "runtimeExecutable": "npm",
+            "runtimeArgs": ["run", "start:dev"],
+            "sourceMaps": true,
+            "cwd": "${workspaceRoot}",
+            "console": "integratedTerminal",
+            "protocol": "inspector"
+        },
+        {
+            "name": "Debug Jest Tests",
+            "type": "node",
+            "request": "launch",
+            "runtimeArgs": ["--inspect-brk", "${workspaceRoot}/node_modules/.bin/jest", "--runInBand", "--coverage", "false"],
+            "console": "integratedTerminal"
+        }
     ]
-  }
+}

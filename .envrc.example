@@ -1,0 +1,2 @@
+export DATABASE_URL=${YOUR_DB_URL}
+export MONGO_URI=mongodb://localhost:27017

@@ -1,10 +1,10 @@
 
-x-pgConfig: &pgConfig
+x-rwPgConfig: &rwPgConfig
   host: 'localhost'
   port:  5432
   user: 'postgres'
   password: 'password'
-  database: "stay_db"
+  database: "db_name"
   ssl: false
 
 x-roPgConfig: &roPgConfig
@@ -12,12 +12,12 @@ x-roPgConfig: &roPgConfig
   port:  5432
   user: 'postgres'
   password: 'password'
-  database: "stay_db"
+  database: "db_name"
   ssl: false
 
 stayConfig: 
-  pgConfig: *pgConfig
-  roConfig: *roPgConfig
+  rwPgConfig: *rwPgConfig
+  roPgConfig: *roPgConfig
   port:
     api: 32098
     websocket: 32099
