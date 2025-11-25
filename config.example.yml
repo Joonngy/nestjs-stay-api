@@ -15,9 +15,22 @@ x-roPgConfig: &roPgConfig
   database: "db_name"
   ssl: false
 
+x-mongoConfig: &mongoConfig
+  uri: 'mongodb://localhost:27017'
+  database: 'stay_logs'
+  options:
+    maxPoolSize: 10
+    minPoolSize: 2
+    serverSelectionTimeoutMS: 5000
+    socketTimeoutMS: 45000
+    writeConcern:
+      w: 1
+      j: false
+
 stayConfig: 
   rwPgConfig: *rwPgConfig
   roPgConfig: *roPgConfig
+  mongoConfig: *mongoConfig
   port:
     api: 32098
     websocket: 32099

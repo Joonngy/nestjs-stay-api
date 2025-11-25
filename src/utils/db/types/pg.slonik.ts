@@ -47,17 +47,11 @@ export class PgSlonik {
     private dbConfig: DbConfig;
     private slonikPool: DatabasePool;
 
-    static getInstance(config: PgConfig, connTimeout: number = DEFAULT_TIMEOUT, mode: PgConnectMode = READ_WRITE): PgSlonik {
-        const key = JSON.stringify(config, Object.keys(config).sort());
-
-        if (!pgUtilPool[key]) {
-            pgUtilPool[key] = new PgSlonik(config, connTimeout, mode);
+    constructor(config: PgConfig, idleTimeout: number, mode: PgConnectMode) {
+        if (config == null) {
+            throw new Error('PostgreSQL configuration not found in config');
         }
 
-        return pgUtilPool[key];
-    }
-
-    constructor(config: PgConfig, idleTimeout: number, mode: PgConnectMode) {
         this.mode = mode;
 
         const roInterceptor: Interceptor | undefined =
@@ -88,23 +82,27 @@ export class PgSlonik {
     async onModuleInit() {
         const cfg = this.dbConfig;
 
-        const opts: ClientConfigurationInput = {
-            captureStackTrace: true, // should be false in production
-            connectionRetryLimit: 5,
-            connectionTimeout: cfg.connectionTimeoutMs ?? 5_000,
-            idleInTransactionSessionTimeout: 'DISABLE_TIMEOUT',
-            idleTimeout: cfg.idleTimeout ?? 30_000,
-            interceptors: cfg.interceptors,
-            maximumPoolSize: cfg.maximumPoolSize ?? 10,
-            statementTimeout: cfg.statementTimeoutMs ?? 'DISABLE_TIMEOUT',
-            typeParsers: [...createTypeParserPreset()],
-        };
-
-        this.slonikPool = await createPool(cfg.connectionString, opts);
+        try {
+            const opts: ClientConfigurationInput = {
+                captureStackTrace: true, // should be false in production
+                connectionRetryLimit: 5,
+                connectionTimeout: cfg.connectionTimeoutMs ?? 5_000,
+                idleInTransactionSessionTimeout: 'DISABLE_TIMEOUT',
+                idleTimeout: cfg.idleTimeout ?? 30_000,
+                interceptors: cfg.interceptors,
+                maximumPoolSize: cfg.maximumPoolSize ?? 10,
+                statementTimeout: cfg.statementTimeoutMs ?? 'DISABLE_TIMEOUT',
+                typeParsers: [...createTypeParserPreset()],
+            };
+            this.slonikPool = await createPool(cfg.connectionString, opts);
+        } catch (error) {
+            console.error('Failed to connect to PostgreSQL', error);
+            throw error;
+        }
     }
 
     async onModuleDestroy() {
-        await this.slonikPool.end();
+        await this.slonikPool?.end();
     }
 
     private buildConnectionString(cfg: PgConfig): string {

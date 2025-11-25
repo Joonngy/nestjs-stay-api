@@ -4,6 +4,7 @@ import {configuration} from './config/configuration';
 import {DbModule} from './utils/db/db.modules';
 import {UsersModule} from './modules/users/users.module';
 import {LoggerMiddleware} from './middleware/logger.middleware';
+import { LoggingModule } from './modules/logging/logging.module';
 
 @Module({
     imports: [
@@ -15,6 +16,7 @@ import {LoggerMiddleware} from './middleware/logger.middleware';
             ignoreEnvFile: false,
         }),
         DbModule,
+        LoggingModule,
         UsersModule,
     ],
     controllers: [],
