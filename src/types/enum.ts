@@ -18,4 +18,19 @@ export const $Enums = {
         online: 'online',
         offline: 'offline',
     },
+    /**
+     * Mail
+     */
+    MailProvider: {
+        smtp_server: 'smtp_server',
+    },
+
+    MailSendStatus: {
+        pending: 'pending',
+        queued: 'queued',
+        failed: 'failed',
+        delivered: 'delivered',
+        bounced: 'bounced',
+        opened: 'opened',
+    },
 };

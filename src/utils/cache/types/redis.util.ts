@@ -4,9 +4,9 @@ import {createClient, RedisClientType} from 'redis';
 import {Config} from '../../../config/types';
 
 @Injectable()
-export class RedisService {
+export class RedisUtil {
     private commonClient: RedisClientType;
-    private readonly logger: Logger = new Logger(RedisService.name);
+    private readonly logger: Logger = new Logger(RedisUtil.name);
 
     constructor(private readonly configService: ConfigService<Config>) {
         const commonRedisConfig = this.configService.get('stayConfig.commonRedisConfig', {infer: true});

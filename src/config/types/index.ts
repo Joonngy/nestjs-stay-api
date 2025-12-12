@@ -58,12 +58,52 @@ export type AwsS3Config = {
     };
 };
 
+export type BullMqConfig = {
+    redis: {
+        host: string;
+        port: number;
+        password?: string;
+        db?: number;
+    };
+    defaultJobOptions?: {
+        attempts: number;
+        backoff: {
+            type: 'exponential' | 'fixed';
+            delay: number;
+        };
+        removeOnComplete: boolean | number;
+        removeOnFail: boolean | number;
+    };
+};
+
+export type SmtpConfig = {
+    host: string; // smtp.gmail.com
+    port: number; // 587, 465, or 25
+    secure: boolean; // true for 465, false for other
+    domain: string;
+    auth: {
+        user: string;
+        pass: string;
+    };
+    pool?: boolean; // Use connection pooling
+    maxConnections?: number;
+    maxMessages?: number; // Per connection
+    rateDelta?: number; // Rate limiting window
+    rateLimit?: number; // Max emails per window
+};
+
 type StayConfig = {
     corsWhitelist: string[];
     rwPgConfig: PgConfig;
     roPgConfig: PgConfig;
     mongoConfig: MongoConfig;
     commonRedisConfig: RedisConfig;
+    bullMqConfig: BullMqConfig;
+    message: {
+        mail: {
+            smtpConfig: SmtpConfig;
+        };
+    };
     aws: {
         sqsConfig: AwsSqsConfig;
         s3: AwsS3Config;

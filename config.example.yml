@@ -32,11 +32,52 @@ x-commonRedisConfig: &commonRedisConfig
   port: 6379
   retry_timeout: 100
 
+x-bullMqConfig: &bullMqConfig
+  redis:
+    host: 'localhost'
+    port: 6379
+    db: 1  # Different DB from cache/sessions
+  defaultJobOptions:
+    attempts: 3
+    backoff:
+      type: 'exponential'
+      delay: 1000
+    removeOnComplete: 100  # Keep last 100 completed jobs
+    removeOnFail: 500      # Keep last 500 failed jobs
+
+x-SmtpConfig: &smtpConfig
+    host: 'localhost'
+    port: 587
+    secure: false
+    domain: 'your_domain'
+    auth: 
+      user: 'your_user'
+      pass: 'your_pass'
+
+x-sqsConfig: &sqsConfig
+  queueUrl: 'https://sqs.us-east-1.amazonaws.com/123456789/stay-queue'
+  region: 'us-east-1'
+  visibilityTimeout: 30
+  mode: 'development'
+
+x-s3Config: &s3Config
+  userProfile:
+    bucket: 'stay-user-profiles'
+    acl: 'private'
+    serverSideEncryption: 'AES256'
+
 stayConfig: 
   rwPgConfig: *rwPgConfig
   roPgConfig: *roPgConfig
   mongoConfig: *mongoConfig
   commonRedisConfig: *commonRedisConfig
+  bullMqConfig: *bullMqConfig
+  message: 
+    mail: 
+      smtpConfig: *smtpConfig
+  aws:
+    sqsConfig: *sqsConfig
+    s3: *s3Config
   port:
     api: 32098
     websocket: 32099

@@ -1,20 +1,19 @@
 import {Module} from '@nestjs/common';
-
-import {REDIS_SERVICE} from 'src/config/types/constant';
-import {RedisService} from './types/redis.service';
+import {REDIS_UTIL} from 'src/config/types/constant';
+import {RedisUtil} from './types/redis.util';
 
 const redisProvider = {
-    provide: REDIS_SERVICE,
-    inject: [RedisService],
-    useFactory: async (redisService: RedisService) => {
-        await redisService.redisConnect();
+    provide: REDIS_UTIL,
+    inject: [RedisUtil],
+    useFactory: async (redisUtil: RedisUtil) => {
+        await redisUtil.redisConnect();
 
-        return redisService;
+        return redisUtil;
     },
 };
 
 @Module({
-    providers: [redisProvider, RedisService],
+    providers: [redisProvider, RedisUtil],
     exports: [redisProvider],
 })
 export class CacheModule {}
